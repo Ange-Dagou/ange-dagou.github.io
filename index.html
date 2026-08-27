@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vavo Ange Mondesire Dagou — Data Analyst</title>
+<meta name="description" content="Portfolio de Dagou Vavo Ange Mondesire, étudiant en licence MIASHS à la recherche d'un stage ou d'une alternance en Data Analyst.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d1420;
+    --panel:#141d2c;
+    --panel-2:#1b2636;
+    --line:#2a3548;
+    --text:#e7ebf1;
+    --text-muted:#8b97a9;
+    --amber:#e8a33d;
+    --teal:#54d6c9;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --rail-w:64px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:var(--teal); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  :focus-visible{
+    outline:2px solid var(--amber);
+    outline-offset:3px;
+  }
+
+  h1,h2,h3{font-family:var(--font-display); letter-spacing:-0.01em;}
+
+  .mono{font-family:var(--font-mono);}
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--amber);
+    display:flex;
+    align-items:center;
+    gap:0.6em;
+    margin-bottom:1.2rem;
+  }
+  .eyebrow::before{
+    content:'';
+    width:8px; height:8px;
+    background:var(--amber);
+    border-radius:50%;
+    display:inline-block;
+  }
+
+  /* ---------- Pipeline rail (signature element) ---------- */
+  .rail{
+    position:fixed;
+    top:0; left:0;
+    width:var(--rail-w);
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:56px;
+    z-index:50;
+    border-right:1px solid var(--line);
+    background:rgba(13,20,32,0.7);
+    backdrop-filter:blur(6px);
+  }
+  .rail-line{
+    position:absolute;
+    top:8%; bottom:8%; left:50%;
+    width:1px;
+    background:var(--line);
+    transform:translateX(-50%);
+    z-index:-1;
+  }
+  .rail-stage{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .rail-dot{
+    width:10px; height:10px;
+    border-radius:50%;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    transition:background .3s, border-color .3s, box-shadow .3s;
+  }
+  .rail-stage.active .rail-dot{
+    background:var(--amber);
+    border-color:var(--amber);
+    box-shadow:0 0 0 4px rgba(232,163,61,0.18);
+  }
+  .rail-label{
+    position:absolute;
+    left:24px;
+    white-space:nowrap;
+    font-family:var(--font-mono);
+    font-size:0.66rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    opacity:0;
+    transform:translateX(-6px);
+    transition:opacity .25s, transform .25s;
+    pointer-events:none;
+  }
+  .rail-stage.active .rail-label{
+    color:var(--amber);
+    opacity:1;
+    transform:translateX(0);
+  }
+  @media (max-width:900px){
+    .rail{display:none;}
+  }
+
+  /* ---------- Layout ---------- */
+  .topbar{
+    position:fixed;
+    top:0; left:var(--rail-w); right:0;
+    height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 clamp(1.2rem, 3vw, 3rem);
+    background:rgba(13,20,32,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    z-index:40;
+  }
+  @media (max-width:900px){ .topbar{left:0;} }
+
+  .topbar .name{font-family:var(--font-display); font-weight:700; font-size:1rem;}
+  .topbar nav{display:flex; gap:1.6rem;}
+  .topbar nav a{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+  }
+  .topbar nav a:hover{color:var(--text); text-decoration:none;}
+  @media (max-width:700px){ .topbar nav{display:none;} }
+
+  main{margin-left:var(--rail-w); padding-top:64px;}
+  @media (max-width:900px){ main{margin-left:0;} }
+
+  section{
+    padding:clamp(3.5rem,8vw,7rem) clamp(1.4rem,5vw,5rem);
+    max-width:1080px;
+  }
+
+  .section-head{margin-bottom:2.6rem;}
+  .section-head h2{font-size:clamp(1.6rem,3vw,2.2rem); font-weight:700;}
+  .section-head p{color:var(--text-muted); margin-top:0.5rem; max-width:52ch;}
+
+  /* ---------- Hero ---------- */
+  #hero{padding-top:clamp(4rem,12vw,8rem); max-width:1080px;}
+  #hero h1{
+    font-size:clamp(2.1rem,5.2vw,3.6rem);
+    font-weight:700;
+    line-height:1.1;
+    max-width:16ch;
+  }
+  #hero .sub{
+    margin-top:1.4rem;
+    font-size:1.05rem;
+    color:var(--text-muted);
+    max-width:56ch;
+  }
+  .contact-row{
+    margin-top:1.8rem;
+    display:flex;
+    flex-wrap:wrap;
+    gap:1.4rem;
+    font-family:var(--font-mono);
+    font-size:0.82rem;
+    color:var(--text-muted);
+  }
+  .contact-row a{color:var(--text-muted);}
+  .contact-row a:hover{color:var(--teal);}
+
+  .metric-row{
+    margin-top:3rem;
+    display:flex;
+    flex-wrap:wrap;
+    gap:clamp(2rem,5vw,4rem);
+  }
+  .metric{border-left:2px solid var(--amber); padding-left:1rem;}
+  .metric .num{
+    font-family:var(--font-display);
+    font-size:clamp(2.2rem,5vw,3rem);
+    font-weight:700;
+    color:var(--amber);
+    line-height:1;
+  }
+  .metric .label{
+    margin-top:0.4rem;
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    color:var(--text-muted);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    max-width:20ch;
+  }
+
+  /* ---------- À propos ---------- */
+  .quote-block{
+    margin-top:2rem;
+    padding:1.4rem 1.6rem;
+    border-left:2px solid var(--teal);
+    background:var(--panel);
+    font-family:var(--font-display);
+    font-size:1.05rem;
+    color:var(--text);
+  }
+  .badges{display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:1.8rem;}
+  .badge{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    padding:0.4rem 0.8rem;
+    border:1px solid var(--line);
+    border-radius:999px;
+    color:var(--text-muted);
+  }
+
+  /* ---------- Compétences ---------- */
+  .skill-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(230px,1fr));
+    gap:1.2rem;
+  }
+  .skill-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:1.4rem;
+  }
+  .skill-card h3{
+    font-size:0.92rem;
+    font-family:var(--font-mono);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--teal);
+    margin-bottom:0.9rem;
+  }
+  .tag-list{display:flex; flex-wrap:wrap; gap:0.4rem;}
+  .tag{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    padding:0.28rem 0.6rem;
+    background:var(--panel-2);
+    border-radius:6px;
+    color:var(--text);
+  }
+
+  /* ---------- Expérience / Projets ---------- */
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:clamp(1.4rem,3vw,2.2rem);
+    margin-bottom:1.4rem;
+  }
+  .card-head{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:0.6rem;
+    margin-bottom:0.9rem;
+  }
+  .card-head h3{font-size:1.15rem;}
+  .card-head .dates{
+    font-family:var(--font-mono);
+    font-size:0.76rem;
+    color:var(--text-muted);
+    white-space:nowrap;
+  }
+  .card .org{color:var(--text-muted); font-size:0.9rem; margin-bottom:0.9rem;}
+  .card ul{margin:0.8rem 0 0.8rem 1.1rem;}
+  .card li{margin-bottom:0.4rem; color:var(--text);}
+  .result-badge{
+    display:inline-flex;
+    align-items:baseline;
+    gap:0.5rem;
+    margin-top:1rem;
+    padding:0.6rem 1rem;
+    background:rgba(232,163,61,0.1);
+    border:1px solid rgba(232,163,61,0.3);
+    border-radius:8px;
+    font-family:var(--font-mono);
+    font-size:0.85rem;
+  }
+  .result-badge .big{font-family:var(--font-display); font-weight:700; color:var(--amber); font-size:1.3rem;}
+  .bridge{
+    margin-top:1rem;
+    font-size:0.88rem;
+    color:var(--text-muted);
+    font-style:italic;
+    border-top:1px dashed var(--line);
+    padding-top:0.9rem;
+  }
+
+  .project-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:1.2rem;
+  }
+
+  /* ---------- Formation ---------- */
+  .timeline{border-left:1px solid var(--line); margin-left:0.4rem;}
+  .timeline-item{
+    position:relative;
+    padding:0 0 1.8rem 1.6rem;
+  }
+  .timeline-item::before{
+    content:'';
+    position:absolute;
+    left:-5px; top:6px;
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--teal);
+  }
+  .timeline-item h3{font-size:1rem;}
+  .timeline-item .dates{font-family:var(--font-mono); font-size:0.76rem; color:var(--text-muted);}
+  .timeline-item .org{color:var(--text-muted); font-size:0.88rem; margin-top:0.2rem;}
+  .timeline-item .note{margin-top:0.5rem; font-size:0.85rem; color:var(--text-muted);}
+
+  /* ---------- Vision ---------- */
+  .vision-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:1.4rem;
+  }
+  .vision-card{
+    background:linear-gradient(160deg, var(--panel), var(--panel-2));
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:1.6rem;
+  }
+  .vision-card .tag-mono{
+    font-family:var(--font-mono);
+    font-size:0.7rem;
+    color:var(--amber);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+  }
+  .vision-card h3{margin-top:0.5rem; font-size:1.1rem;}
+  .vision-card p{margin-top:0.7rem; color:var(--text-muted); font-size:0.92rem;}
+  .vision-card .linked{
+    margin-top:0.9rem;
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    color:var(--text-muted);
+  }
+
+  /* ---------- Contact ---------- */
+  #contact{text-align:left;}
+  .contact-cta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:1rem;
+    margin-top:1.6rem;
+  }
+  .btn{
+    font-family:var(--font-mono);
+    font-size:0.82rem;
+    padding:0.85rem 1.4rem;
+    border-radius:8px;
+    border:1px solid var(--line);
+    color:var(--text);
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+  }
+  .btn.primary{
+    background:var(--amber);
+    border-color:var(--amber);
+    color:#1a1204;
+    font-weight:600;
+  }
+  .btn.primary:hover{text-decoration:none; filter:brightness(1.08);}
+  .btn:hover{text-decoration:none; border-color:var(--teal); color:var(--teal);}
+
+  footer{
+    margin-left:var(--rail-w);
+    padding:2.4rem clamp(1.4rem,5vw,5rem);
+    border-top:1px solid var(--line);
+    color:var(--text-muted);
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+  }
+  @media (max-width:900px){ footer{margin-left:0;} }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1; transform:none; transition:none;}
+    .rail-dot, .rail-label{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="rail" aria-hidden="true">
+  <div class="rail-line"></div>
+  <div class="rail-stage" data-stage="1"><span class="rail-dot"></span><span class="rail-label">Collecte</span></div>
+  <div class="rail-stage" data-stage="2"><span class="rail-dot"></span><span class="rail-label">Structuration</span></div>
+  <div class="rail-stage" data-stage="3"><span class="rail-dot"></span><span class="rail-label">Modélisation</span></div>
+  <div class="rail-stage" data-stage="4"><span class="rail-dot"></span><span class="rail-label">Décision</span></div>
+</div>
+
+<header class="topbar">
+  <span class="name">Vavo Ange Mondesire Dagou</span>
+  <nav>
+    <a href="#apropos">À propos</a>
+    <a href="#competences">Compétences</a>
+    <a href="#experience">Expérience</a>
+    <a href="#projets">Projets</a>
+    <a href="#vision">Vision</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+
+  <section id="hero" data-stage="1">
+    <p class="eyebrow">Pipeline — Collecte</p>
+    <h1>Je transforme des données brutes en décisions.</h1>
+    <p class="sub">Dagou Vavo Ange Mondesire, étudiant en dernière année de Licence MIASHS à l'Université Toulouse Jean Jaurès. Je recherche un stage ou une alternance Data Analyst, avec une appétence pour l'IA appliquée, le Data Engineering et la Data Science.</p>
+
+    <div class="contact-row">
+      <span>Toulouse, France</span>
+      <span>·</span>
+      <span>Disponible dès septembre 2026</span>
+      <span>·</span>
+      <a href="mailto:angedagou08@gmail.com">angedagou08@gmail.com</a>
+      <span>·</span>
+      <a href="tel:0684630340">06 84 63 03 40</a>
+      <span>·</span>
+      <a href="https://linkedin.com/in/vavo-ange-dagou-a863353ba" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+
+    <div class="metric-row">
+      <div class="metric">
+        <div class="num">43%</div>
+        <div class="label">Réduction du temps de réponse SQL — stage CIE</div>
+      </div>
+      <div class="metric">
+        <div class="num">252,6 Go</div>
+        <div class="label">Base de données optimisée, 184 tables</div>
+      </div>
+      <div class="metric">
+        <div class="num">3</div>
+        <div class="label">Projets data menés de bout en bout</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="apropos" data-stage="1" class="reveal">
+    <div class="section-head">
+      <p class="eyebrow">Contexte</p>
+      <h2>À propos</h2>
+    </div>
+    <p>Passionné par la donnée, je me forme depuis plusieurs années à l'intersection des mathématiques, de l'informatique et des sciences humaines. Après un BTS Informatique Développeur d'Applications (admissible) en Côte d'Ivoire, j'ai rejoint la Licence MIASHS à Toulouse pour me spécialiser en analyse de données appliquée.</p>
+
+    <div class="quote-block">« J'apprends en faisant : je préfère comprendre chaque brique moi-même, une API REST, un moteur de stockage SQL, un modèle statistique, plutôt que m'appuyer sur des outils tout faits. »</div>
+
+    <p style="margin-top:1.4rem;">Ma dernière année de licence renforcera ce profil avec des modules ciblés : statistique exploratoire multidimensionnelle, sondages, extraction d'information et traitement automatique des langues, graphes et intelligence artificielle, gestion de projet.</br> Mon objectif après la licence est d'intégrer un master en Data Science et IA.</p>
+
+    <div class="badges">
+      <span class="badge">Rigueur &amp; synthèse</span>
+      <span class="badge">Autonomie</span>
+      <span class="badge">Polyvalence technologique</span>
+      <span class="badge">Travail en équipe</span>
+    </div>
+  </section>
+
+  <section id="competences" data-stage="2" class="reveal">
+    <div class="section-head">
+      <p class="eyebrow">Pipeline — Structuration</p>
+      <h2>Compétences</h2>
+      <p>Ce que je manipule, du recueil de la donnée à sa mise en forme décisionnelle.</p>
+    </div>
+    <div class="skill-grid">
+      <div class="skill-card">
+        <h3>Analyse &amp; manipulation</h3>
+        <div class="tag-list">
+          <span class="tag">Python</span><span class="tag">R / RStudio</span>
+          <span class="tag">Analyse exploratoire</span><span class="tag">Web Scraping</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Bases de données</h3>
+        <div class="tag-list">
+          <span class="tag">SQL</span><span class="tag">MySQL</span><span class="tag">SQLite</span>
+          <span class="tag">MariaDB</span><span class="tag">SQL Server</span><span class="tag">Oracle</span>
+          <span class="tag">MCD Merise</span><span class="tag">Administration BDD</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Visualisation &amp; reporting</h3>
+        <div class="tag-list">
+          <span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">Excel</span>
+          <span class="tag">R Markdown</span><span class="tag">PowerPoint</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Mathématiques &amp; stats</h3>
+        <div class="tag-list">
+          <span class="tag">Stat. descriptive</span><span class="tag">Stat. inférentielle</span>
+          <span class="tag">Probabilités</span><span class="tag">Algèbre linéaire</span>
+          <span class="tag">Optimisation linéaire</span><span class="tag">Recherche opérationnelle</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Développement</h3>
+        <div class="tag-list">
+          <span class="tag">HTML5 / CSS</span><span class="tag">PHP</span><span class="tag">C / C++</span>
+          <span class="tag">PowerShell</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Langues</h3>
+        <div class="tag-list">
+          <span class="tag">Français: natif</span><span class="tag">Anglais: A2, je suis des cours pour atteindre le niveau B1.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" data-stage="3" class="reveal">
+    <div class="section-head">
+      <p class="eyebrow">Pipeline — Modélisation</p>
+      <h2>Expérience professionnelle</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Stagiaire Administrateur de bases de données — GS2E (CIE)</h3>
+        <span class="dates mono">Fév. – Avr. 2024</span>
+      </div>
+      <p class="org">Compagnie Ivoirienne d'Électricité · Abidjan, Côte d'Ivoire</p>
+      <p>Stage de fin d'études en charge de la base de données de <strong>SMARTVEND</strong>, l'application nationale de gestion des compteurs d'électricité prépayés/postpayés.</p>
+      <ul>
+        <li><strong>Optimisation système</strong>: migration du moteur de stockage vers InnoDB, ajustement de <code class="mono">innodb_buffer_pool_size</code></li>
+        <li><strong>Optimisation structurelle</strong>: création d'index stratégiques et partitionnement des tables</li>
+      </ul>
+      <div class="result-badge"><span class="big">−43%</span> temps de réponse des requêtes SQL, sur une base de 252,6 Go / 184 tables</div>
+    </div>
+  </section>
+
+  <section id="projets" data-stage="3" class="reveal">
+    <div class="section-head">
+      <p class="eyebrow">Pipeline — Modélisation</p>
+      <h2>Projets</h2>
+    </div>
+    <div class="project-grid">
+
+      <div class="card">
+        <div class="card-head">
+          <h3>Crédit Breton</h3>
+          <span class="dates mono">Juil. – Août 2026</span>
+        </div>
+        <p class="org">Formation Data Analyst Power BI, OpenClassrooms</p>
+        <p>Outil(dashboard) d'aide à la décision pour une agence immobilière fictive.</p>
+        <ul>
+          <li>Collecte des données </li>
+          <li>User stories &amp; recueil des besoins métier</li>
+          <li>Profilage et nettoyage des données</li>
+          <li>Modélisation en étoile, mesures DAX</li>
+          <li>Score emprunteur automatisé (3 critères)</li>
+          <li>Audit de conformité, dossiers refusés à tort détectés</li>
+        </ul>
+        <div class="bridge">Applique la rigueur de modélisation acquise pendant le stage CIE, cette fois au service d'une restitution décisionnelle visuelle.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3>Qualité de l'air en Occitanie</h3>
+          <span class="dates mono">Fév. – Avr. 2026</span>
+        </div>
+        <p class="org">Projet universitaire · Licence 2 MIASHS</p>
+        <ul>
+          <li>Collecte de données atmosphériques en open data</li>
+          <li>Normalisations des données</li>
+          <li>Création et Structuration d'une base de donnée avec Python + SQLite</li>
+          <li>Analyses descriptive univariées/bivariées sous R</li>
+          <li>Rapport automatisé en R Markdown et présentation du projet</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3>Application de domotique</h3>
+        </div>
+        <p class="org">Projet universitaire · Licence 2 MIASHS</p>
+        <ul>
+          <li>Logique interactive &amp; interface utilisateur</li>
+          <li>Application domotique modulaire Python (Tkinter) : Gestion de l'éclairage &amp; température d'une pièce</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="formation" data-stage="4" class="reveal">
+    <div class="section-head">
+      <p class="eyebrow">Pipeline — Décision</p>
+      <h2>Formation</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h3>Licence MIASHS — Parcours Mathématiques</h3>
+        <div class="dates mono">2024 – en cours</div>
+        <div class="org">Université Toulouse Jean Jaurès</div>
+      </div>
+      <div class="timeline-item">
+        <h3>BTS Informatique — Développeur d'Application (BTS IDA)</h3>
+        <div class="dates mono">2021 – 2023 · admissible</div>
+        <div class="org">Group Bwol, Abidjan, Côte d'Ivoire</div>
+        <div class="note">Admissible en août 2023 ; soutenance non passée, la date ayant été avancée par rapport à l'inscription à Toulouse Jean Jaurès (procédure Campus France).</div>
+      </div>
+      <div class="timeline-item">
+        <h3>Baccalauréat Série D (Scientifique)</h3>
+        <div class="dates mono">2020 – 2021</div>
+        <div class="org">Groupe Scolaire Saint Eder, Abobo-Kennedy, Côte d'Ivoire</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="vision" data-stage="4" class="reveal">
+    <div class="section-head">
+      <p class="eyebrow">Pipeline — Décision</p>
+      <h2>Vision — au-delà de l'analyse</h2>
+      <p>La donnée n'est qu'un point de départ. Voici où je veux porter ces compétences ensuite.</p>
+    </div>
+    <div class="vision-grid">
+      <div class="vision-card">
+        <span class="tag-mono">01 — IA appliquée</span>
+        <h3>Faire parler la donnée non structurée</h3>
+        <p>Mon module de traitement automatique des langues et d'extraction d'information m'a donné le goût d'aller au-delà des tableaux : détecter des signaux dans du texte, automatiser une classification, enrichir une analyse avec du machine learning plutôt qu'avec des seules règles métier.</p>
+        <div class="linked">Lié à : TAL &amp; extraction d'information, Graphes/IA (L3)</div>
+      </div>
+      <div class="vision-card">
+        <span class="tag-mono">02 — Data Engineering</span>
+        <h3>Construire des pipelines fiables</h3>
+        <p>Mon stage à la CIE m'a appris qu'une base bien pensée vaut toute l'analyse qu'on veut en tirer. Je veux approfondir la conception de pipelines de données robustes — ingestion, nettoyage automatisé, orchestration — pour que l'analyse en aval repose sur des fondations solides.</p>
+        <div class="linked">Lié à : administration BDD, APIs REST, modélisation Merise</div>
+      </div>
+      <div class="vision-card">
+        <span class="tag-mono">03 — Data Science</span>
+        <h3>Passer du constat à la prédiction</h3>
+        <p>Le score emprunteur du projet Crédit Breton n'était qu'une première brique de règles. La suite logique : des modèles prédictifs et d'aide à la décision plus sophistiqués, nourris par la statistique inférentielle et l'optimisation que j'approfondis actuellement.</p>
+        <div class="linked">Lié à : statistique exploratoire multidimensionnelle, optimisation (L3)</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" data-stage="4" class="reveal">
+    <div class="section-head">
+      <p class="eyebrow">Pipeline — Décision</p>
+      <h2>Travaillons ensemble</h2>
+      <p>Disponible pour un stage ou une alternance Data Analyst à partir de septembre 2026.</p>
+    </div>
+    <div class="contact-cta">
+      <a class="btn primary" href="mailto:angedagou08@gmail.com">Écrire un email</a>
+      <a class="btn" href="https://linkedin.com/in/vavo-ange-dagou-a863353ba" target="_blank" rel="noopener">Voir le LinkedIn</a>
+      <a class="btn" href="tel:0684630340">06 84 63 03 40</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Toulouse, France — Portfolio mis à jour en 2026.
+</footer>
+
+<script>
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('in');
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // Pipeline rail — highlight active stage based on section in view
+  const railStages = document.querySelectorAll('.rail-stage');
+  const sections = document.querySelectorAll('main section[data-stage]');
+  const stageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const stage = entry.target.getAttribute('data-stage');
+        railStages.forEach(s => {
+          s.classList.toggle('active', s.getAttribute('data-stage') === stage);
+        });
+      }
+    });
+  }, { threshold: 0.5, rootMargin: '-20% 0px -50% 0px' });
+  sections.forEach(s => stageObserver.observe(s));
+</script>
+
+</body>
+</html>
